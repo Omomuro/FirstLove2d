@@ -7,6 +7,7 @@ Player = {
 	id = 1, 
 	level = 1, 
 	alive = true, 
+	dmg = 1, 
 	name = ""
 } 
 
@@ -83,7 +84,8 @@ Monster = {
 	health = 100,
 	level = 1,
 	gold = 1, 
-	alive = true 
+	alive = true,
+	dmg = 1
 }
 
 Monster.__index = Monster 
@@ -238,7 +240,7 @@ end
 -- Game code 
 
 function love.load(arg)
-	p = Player:new("TEST NAME: BOB")
+	p = Player:new("PLAYER NAME: BOB")
 	m = Monster:new()
 	wx, wy = love.graphics.getDimensions() 
 	shopItem_1 = ShopItem:new(2)
@@ -257,10 +259,10 @@ function love.draw()
 	love.graphics.print(wy * 0.20, 200, 200)
 	love.graphics.print(love.mouse.getX(), 10, 50)
 	love.graphics.print(love.mouse.getY(), 50, 50)
-	love.graphics.print(p:getName(), 10,10)
-	love.graphics.print(p:getExp(), 10,20)
-	love.graphics.print(p:getGold(), 10,30)
-	love.graphics.print(p:getHealth(), 10,40)
+	love.graphics.print(p:getName(), wx*0.58, wy*0.4)
+	love.graphics.print(p:getExp(), wx*0.58, wy*0.42)
+	love.graphics.print(p:getGold(), wx*0.58, wy*0.44)
+	love.graphics.print(p:getHealth(), wx*0.58, wy*0.46)
 	love.graphics.rectangle("line", 100, 100,100,100)
 	love.graphics.print(playerZone:getX(), 300, 300)
 	playerZone:draw("line")
