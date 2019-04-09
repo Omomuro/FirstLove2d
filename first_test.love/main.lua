@@ -361,6 +361,7 @@ function Button.isClick(self, obj, mx, my, isDown)
 		if obj:getId() == 1 then 
 			love.graphics.print("DOWN", 100,300)
 			obj:setHealth(obj:getHealth() - p:getClickDmg()) -- replace with obj function later
+			love.graphics.print(-p:getClickDmg(), wx*0.80 + math.random(-50,100), wy*0.6 + math.random(-50,100)) -- random health decrease on monster 
 		elseif obj:getId() > 1 then 
 			love.graphics.print("SHOP ITEM") -- replace with obj function 
 		end 
@@ -430,8 +431,7 @@ function love.draw()
 	love.graphics.print(m:getHealth(), wx*0.80, wy*0.44)
 	love.graphics.print(m:getDmg(), wx*0.80, wy*0.46)
 
-
-	-- Random
+	-- Click Zone
 	love.graphics.rectangle("line", 100, 100,100,100)
 	love.graphics.print(playerZone:getX(), 300, 300)
 	playerZone:draw("line")
@@ -439,6 +439,8 @@ function love.draw()
 	love.graphics.print(a, 210,100)
 	shopButton:draw("line")
 	shopButton:isClick(shopItem_1, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	
+	-- Player and Monster 
 	p:draw()
 	m:draw()
 end
