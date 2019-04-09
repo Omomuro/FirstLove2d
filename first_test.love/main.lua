@@ -7,8 +7,10 @@ Player = {
 	id = 1, 
 	level = 1, 
 	alive = true, 
-	dmg = 1, 
-	name = ""
+	dmg = 0.2, 
+	name = "",
+	maxHealth = 100,
+	clickDmg = 1
 } 
 
 Player.__index = Player
@@ -55,6 +57,11 @@ function Player.setDmg( self, dmg )
 	self.dmg = dmg 
 end
 
+function Player.setClickDmg( self, dmg )
+	-- body
+	self.clickDmg = dmg 
+end
+
 
 -- Player get_helpers
 
@@ -88,6 +95,29 @@ function Player.getDmg( self )
 	return self.dmg
 end
 
+function Player.getAlive( self )
+	-- body
+	return self.alive
+end
+
+function Player.getMaxHealth( self )
+	-- body
+	return self.maxHealth
+end
+
+function Player.getClickDmg( self )
+	-- body
+	return self.clickDmg
+end
+
+function Player.levelUp( self )
+	-- body
+	self.level = self.level + 1 
+	self.maxHealth = 90 + 10 * (self.level)
+	self.health = self.maxHealth
+	self.dmg = self.dmg + 1 
+end
+
 function Player.draw( self )
 	-- body
 	love.graphics.rectangle("line",wx*0.58, wy*0.6, wx*0.1, wy*0.2)
@@ -99,7 +129,10 @@ Monster = {
 	level = 1,
 	reward = 1, 
 	alive = true,
-	dmg = 0.5
+	dmg = 0.1,
+	giveExp = 5,
+	maxHealth = 100,
+	id = 1 
 }
 
 Monster.__index = Monster 
@@ -160,11 +193,39 @@ function Monster.getDmg ( self )
 	return self.dmg
 end
 
+function Monster.getAlive( self )
+	-- body
+	return self.alive 
+end
+
+function Monster.getExp( self )
+	-- body
+	return self.giveExp
+end
+
+function Monster.getMaxHealth( self )
+	-- body
+	return self.maxHealth
+end
+
+function Monster.getId( self )
+	-- body
+	return self.id 
+end
+
+function Monster.levelUp( self )
+	-- body
+	self.maxHealth = 90 + 10 * (self.level)
+	self.health = self.maxHealth
+	self.level = self.level + 1 
+	self.dmg = self.dmg + 0.5
+	self.reward = self.reward + 1 
+end
+
 function Monster.draw( self )
 	-- body
 	love.graphics.rectangle("line",wx*0.80, wy*0.6, wx*0.1, wy*0.2)
 end
-
 
 -- ShopItem Class 
 
@@ -285,8 +346,7 @@ function Button.isClick(self, obj, mx, my, isDown)
 	if isDown == true and mx > self.x and mx < self.x + self.width and my > self.y and my < self.y + self.height then 
 		if obj:getId() == 1 then 
 			love.graphics.print("DOWN", 100,300)
-			local gold = obj:getGold() -- replace with obj function 
-			obj:setGold(gold + 1)
+			obj:setHealth(obj:getHealth() - p:getClickDmg()) -- replace with obj function later
 		elseif obj:getId() > 1 then 
 			love.graphics.print("SHOP ITEM") -- replace with obj function 
 		end 
@@ -315,6 +375,20 @@ function love.update(dt)
 	m:setHealth(m:getHealth() - p:getDmg())
 	p:setHealth(p:getHealth() - m:getDmg())
 
+	if p:getHealth() <= 0 then 
+		love.graphics.print("RIP PLAYER")
+		p:setExp(0)
+		p:setGold(0)
+		p:setHealth(p:getMaxHealth())
+		m:setHealth(m:getMaxHealth())
+	end 
+
+	if m:getHealth() <= 0 then 
+		m:levelUp()
+		p:setExp(p:getExp() + m:getExp())
+		p:setGold(p:getGold() + m:getReward())
+	end 
+
 end
 
 function love.draw()
@@ -338,7 +412,7 @@ function love.draw()
 	love.graphics.rectangle("line", 100, 100,100,100)
 	love.graphics.print(playerZone:getX(), 300, 300)
 	playerZone:draw("line")
-	playerZone:isClick(p, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	playerZone:isClick(m, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 	love.graphics.print(a, 210,100)
 	shopButton:draw("line")
 	shopButton:isClick(shopItem_1, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
