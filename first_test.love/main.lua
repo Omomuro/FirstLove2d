@@ -10,7 +10,8 @@ Player = {
 	dmg = 0.2, 
 	name = "",
 	maxHealth = 100,
-	clickDmg = 1
+	clickDmg = 1, 
+	expGate = 5
 } 
 
 Player.__index = Player
@@ -110,12 +111,24 @@ function Player.getClickDmg( self )
 	return self.clickDmg
 end
 
+function Player.getLevel( self )
+	-- body
+	return self.level
+end
+
+function Player.getExpGate(self)
+	-- body
+	return self.expGate
+end
+
 function Player.levelUp( self )
 	-- body
 	self.level = self.level + 1 
 	self.maxHealth = 90 + 10 * (self.level)
 	self.health = self.maxHealth
 	self.dmg = self.dmg + 1 
+	self.exp = 0 
+	self.expGate = self.expGate + 1 
 end
 
 function Player.draw( self )
@@ -220,6 +233,7 @@ function Monster.levelUp( self )
 	self.level = self.level + 1 
 	self.dmg = self.dmg + 0.5
 	self.reward = self.reward + 1 
+	self.giveExp = self.giveExp + 1
 end
 
 function Monster.draw( self )
@@ -389,6 +403,9 @@ function love.update(dt)
 		p:setGold(p:getGold() + m:getReward())
 	end 
 
+	if p:getExp() >= p:getExpGate() then 
+		p:levelUp()
+	end 
 end
 
 function love.draw()
@@ -397,18 +414,24 @@ function love.draw()
 	love.graphics.print(love.mouse.getY(), 50, 50)
 
 	-- Player info 
-	love.graphics.print(p:getName(), wx*0.58, wy*0.4)
-	love.graphics.print(p:getExp(), wx*0.58, wy*0.42)
-	love.graphics.print(p:getGold(), wx*0.58, wy*0.44)
-	love.graphics.print(p:getHealth(), wx*0.58, wy*0.46)
+	love.graphics.print(p:getName(), wx*0.58, wy*0.36)
+	love.graphics.print(p:getLevel(), wx*0.58, wy*0.38)
+	love.graphics.print(p:getExp(), wx*0.58, wy*0.40)
+	love.graphics.print(p:getGold(), wx*0.58, wy*0.42)
+	love.graphics.print(p:getHealth(), wx*0.58, wy*0.44)
+	love.graphics.print(p:getDmg(), wx*0.58, wy*0.46)
 
 
 	-- Monster info 
-	love.graphics.print(m:getLevel(), wx*0.80, wy*0.4)
-	love.graphics.print(m:getDmg(), wx*0.80, wy*0.42)
-	love.graphics.print(m:getReward(), wx*0.80, wy*0.44)
-	love.graphics.print(m:getHealth(), wx*0.80, wy*0.46)
+	love.graphics.print("MONSTER", wx*0.80, wy*0.36)
+	love.graphics.print(m:getLevel(), wx*0.80, wy*0.38)
+	love.graphics.print(m:getExp(), wx*0.80, wy*0.40)
+	love.graphics.print(m:getReward(), wx*0.80, wy*0.42)
+	love.graphics.print(m:getHealth(), wx*0.80, wy*0.44)
+	love.graphics.print(m:getDmg(), wx*0.80, wy*0.46)
 
+
+	-- Random
 	love.graphics.rectangle("line", 100, 100,100,100)
 	love.graphics.print(playerZone:getX(), 300, 300)
 	playerZone:draw("line")
