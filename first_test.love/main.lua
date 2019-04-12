@@ -409,6 +409,15 @@ function Button.isClick(self, obj, mx, my, isDown)
 
 			if self.id == 2 then 
 				love.graphics.print("SHOP ITEMMM", 200, 0)
+				if self.number == 1 then 
+					love.graphics.print("SHOP ITEMMM 111111", 400, 0)
+				elseif self.number == 2 then 
+					love.graphics.print("SHOP ITEMMM 2222222", 400, 0)
+				elseif self.number == 3 then
+					love.graphics.print("SHOP ITEMMM 3333333", 400, 0)
+				elseif self.number == 4 then 
+					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)
+				end 
 			end 
 		end 
 	end 
@@ -429,10 +438,10 @@ function love.load(arg)
 	shopMenuButton4 = Button:new(wx*0.32, wy*0.02, wy*0.08, wx*0.08, 3, 4)
 	shopMenu = ShopMenu:new()
 
-	shopItemButton11 = Button:new(wx*0.02, wy*0.20, wy*0.08, wx*0.08, 2, 0)
-	shopItemButton12 = Button:new(wx*0.12, wy*0.20, wy*0.08, wx*0.08, 2, 0)
-	shopItemButton13 = Button:new(wx*0.22, wy*0.20, wy*0.08, wx*0.08, 2, 0)
-	shopItemButton14 = Button:new(wx*0.32, wy*0.20, wy*0.08, wx*0.08, 2, 0)
+	shopItemButton11 = Button:new(wx*0.02, wy*0.20, wy*0.08, wx*0.08, 2, 1)
+	shopItemButton12 = Button:new(wx*0.12, wy*0.20, wy*0.08, wx*0.08, 2, 2)
+	shopItemButton13 = Button:new(wx*0.22, wy*0.20, wy*0.08, wx*0.08, 2, 3)
+	shopItemButton14 = Button:new(wx*0.32, wy*0.20, wy*0.08, wx*0.08, 2, 4)
 
 	shopItem11 = ShopItem:new(2)
 	shopItem12 = ShopItem:new(2)
@@ -491,7 +500,7 @@ function love.draw()
 	love.graphics.print(m:getDmg(), wx*0.80, wy*0.46)
 
 	-- Click Zone
-	love.graphics.rectangle("line", 100, 100,100,100)
+	--love.graphics.rectangle("line", 100, 100,100,100)
 	love.graphics.print(playerZone:getX(), 300, 300)
 	playerZone:draw("line")
 	playerZone:isClick(m, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
