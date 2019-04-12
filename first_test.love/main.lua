@@ -268,25 +268,62 @@ function ShopItem.getId( self )
  end 
 
 
+-- ShopMenu Class 
+ShopMenu = {
+	number = 1,
+	id = 3 
+}
+
+ShopMenu.__index = ShopMenu
+
+-- ShopMenu constructor
+function ShopMenu.new( self )
+	-- body
+	local self = setmetatable({}, ShopMenu)
+	return self 
+end
+
+-- ShopMenu set_helpers
+function ShopMenu.setNumber( self, number )
+	-- body
+	self.number = number
+end
+
+-- ShopMenu get_helpers 
+function ShopMenu.getNumber( self )
+	-- body	
+	return self.number
+end
+
+function ShopMenu.getId( self )
+	-- body
+	return self.id
+end
+
+
 -- Button Class 
 Button = {
 	x = 0,
 	y = 0,
 	height = 0,
 	width = 0,
-	clicked = false 
+	clicked = false,
+	id = 0, -- shopMenu
+	number = 0 -- ShopMenuActive
 }
 
 Button.__index = Button
 
 -- Button Construct 
-function Button.new(self, x, y, height, width)
+function Button.new(self, x, y, height, width, id, number)
 	-- body
 	local self = setmetatable({}, Button)
 	self.x = x 
 	self.y = y 
 	self.height = height 
 	self.width = width
+	self.id = id 
+	self.number = number
 	return self 
 end
 
@@ -364,6 +401,10 @@ function Button.isClick(self, obj, mx, my, isDown)
 			love.graphics.print(-p:getClickDmg(), wx*0.80 + math.random(-50,100), wy*0.6 + math.random(-50,100)) -- random health decrease on monster 
 		elseif obj:getId() > 1 then 
 			love.graphics.print("SHOP ITEM") -- replace with obj function 
+			if self.id == 3 then 
+				obj:setNumber(self.number)
+				love.graphics.print(self.number)
+			end 
 		end 
 	end 
 end
@@ -377,8 +418,12 @@ function love.load(arg)
 	m = Monster:new()
 	wx, wy = love.graphics.getDimensions() 
 	shopItem_1 = ShopItem:new(2)
-	playerZone = Button:new(wx*0.5, wy*0.02, wy*0.9, wx*0.48)
-	shopButton = Button:new(wx*0.02, wy*0.02, wy*0.08, wx*0.08)
+	playerZone = Button:new(wx*0.5, wy*0.02, wy*0.9, wx*0.48, 1, 0)
+	shopMenuButton1 = Button:new(wx*0.02, wy*0.02, wy*0.08, wx*0.08, 3, 1)
+	shopMenuButton2 = Button:new(wx*0.12, wy*0.02, wy*0.08, wx*0.08, 3, 2)
+	shopMenuButton3 = Button:new(wx*0.22, wy*0.02, wy*0.08, wx*0.08, 3, 3)
+	shopMenuButton4 = Button:new(wx*0.32, wy*0.02, wy*0.08, wx*0.08, 3, 4)
+	shopMenu = ShopMenu:new()
 
 end
 
@@ -437,10 +482,29 @@ function love.draw()
 	playerZone:draw("line")
 	playerZone:isClick(m, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 	love.graphics.print(a, 210,100)
-	shopButton:draw("line")
-	shopButton:isClick(shopItem_1, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	shopMenuButton1:draw("line")
+	shopMenuButton2:draw("line")
+	shopMenuButton3:draw("line")
+	shopMenuButton4:draw("line")
+	shopMenuButton1:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	shopMenuButton2:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	shopMenuButton3:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	shopMenuButton4:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 	
 	-- Player and Monster 
 	p:draw()
 	m:draw()
+
+	-- Shop menu
+
+	if shopMenu:getNumber() == 1 then 
+		love.graphics.print("IN MENU ONE")
+	elseif shopMenu:getNumber() == 2 then 
+		love.graphics.print("IN MENU TWO")
+	elseif shopMenu:getNumber() == 3 then 
+		love.graphics.print("IN MENU THREE")
+	elseif shopMenu:getNumber() == 4 then 
+		love.graphics.print("IN MENU FOUR")
+	end 
+
 end
