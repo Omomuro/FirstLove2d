@@ -416,7 +416,15 @@ function Button.isClick(self, obj, mx, my, isDown)
 				elseif self.number == 3 then
 					love.graphics.print("SHOP ITEMMM 3333333", 400, 0)
 				elseif self.number == 4 then 
-					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)
+					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)		
+				elseif self.number == 5 then 
+					love.graphics.print("SHOP ITEMMM 5555555", 400, 0)
+				elseif self.number == 6 then 
+					love.graphics.print("SHOP ITEMMM 6666666", 400, 0)
+				elseif self.number == 7 then
+					love.graphics.print("SHOP ITEMMM 7777777", 400, 0)
+				elseif self.number == 8 then 
+					love.graphics.print("SHOP ITEMMM 8888888", 400, 0)
 				end 
 			end
 
@@ -457,10 +465,21 @@ function love.load(arg)
 	shopItemButton13 = Button:new(wx*0.22, wy*0.20, wy*0.08, wx*0.08, 2, 3)
 	shopItemButton14 = Button:new(wx*0.32, wy*0.20, wy*0.08, wx*0.08, 2, 4)
 
+	shopItemButton15 = Button:new(wx*0.02, wy*0.30, wy*0.08, wx*0.08, 2, 5)
+	shopItemButton16 = Button:new(wx*0.12, wy*0.30, wy*0.08, wx*0.08, 2, 6)
+	shopItemButton17 = Button:new(wx*0.22, wy*0.30, wy*0.08, wx*0.08, 2, 7)
+	shopItemButton18 = Button:new(wx*0.32, wy*0.30, wy*0.08, wx*0.08, 2, 8)
+
+
 	shopItem11 = ShopItem:new(2)
 	shopItem12 = ShopItem:new(2)
 	shopItem13 = ShopItem:new(2)
-	shopItem14 = ShopItem:new(2)	
+	shopItem14 = ShopItem:new(2)
+
+	shopItem15 = ShopItem:new(2)
+	shopItem16 = ShopItem:new(2)
+	shopItem17 = ShopItem:new(2)
+	shopItem18 = ShopItem:new(2)	
 
 	shopItemButton21 = Button:new(wx*0.02, wy*0.20, wy*0.08, wx*0.08, 4, 1)
 	shopItemButton22 = Button:new(wx*0.12, wy*0.20, wy*0.08, wx*0.08, 4, 2)
@@ -554,6 +573,14 @@ function love.draw()
 		shopItemButton12:isClick(shopItem12, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 		shopItemButton13:isClick(shopItem13, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 		shopItemButton14:isClick(shopItem14, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton15:draw("line")
+		shopItemButton16:draw("line")
+		shopItemButton17:draw("line")
+		shopItemButton18:draw("line")
+		shopItemButton15:isClick(shopItem15, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton16:isClick(shopItem16, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton17:isClick(shopItem17, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton18:isClick(shopItem18, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 
 
 
