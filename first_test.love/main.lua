@@ -408,7 +408,20 @@ function Button.isClick(self, obj, mx, my, isDown)
 			end 
 
 			if self.id == 2 then 
-				love.graphics.print("SHOP ITEMMM", 200, 0)
+				love.graphics.print("SHOP ITEMMM IN MENU 1", 200, 0)
+				if self.number == 1 then 
+					love.graphics.print("SHOP ITEMMM 111111", 400, 0)
+				elseif self.number == 2 then 
+					love.graphics.print("SHOP ITEMMM 2222222", 400, 0)
+				elseif self.number == 3 then
+					love.graphics.print("SHOP ITEMMM 3333333", 400, 0)
+				elseif self.number == 4 then 
+					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)
+				end 
+			end
+
+			if self.id == 4 then 
+				love.graphics.print("SHOP ITEMMM IN MENU 2", 200, 0)
 				if self.number == 1 then 
 					love.graphics.print("SHOP ITEMMM 111111", 400, 0)
 				elseif self.number == 2 then 
@@ -419,6 +432,7 @@ function Button.isClick(self, obj, mx, my, isDown)
 					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)
 				end 
 			end 
+
 		end 
 	end 
 end
@@ -435,7 +449,7 @@ function love.load(arg)
 	shopMenuButton1 = Button:new(wx*0.02, wy*0.02, wy*0.08, wx*0.08, 3, 1)
 	shopMenuButton2 = Button:new(wx*0.12, wy*0.02, wy*0.08, wx*0.08, 3, 2)
 	shopMenuButton3 = Button:new(wx*0.22, wy*0.02, wy*0.08, wx*0.08, 3, 3)
-	shopMenuButton4 = Button:new(wx*0.32, wy*0.02, wy*0.08, wx*0.08, 3, 4)
+	--shopMenuButton4 = Button:new(wx*0.32, wy*0.02, wy*0.08, wx*0.08, 3, 4)
 	shopMenu = ShopMenu:new()
 
 	shopItemButton11 = Button:new(wx*0.02, wy*0.20, wy*0.08, wx*0.08, 2, 1)
@@ -446,7 +460,17 @@ function love.load(arg)
 	shopItem11 = ShopItem:new(2)
 	shopItem12 = ShopItem:new(2)
 	shopItem13 = ShopItem:new(2)
-	shopItem14 = ShopItem:new(2)
+	shopItem14 = ShopItem:new(2)	
+
+	shopItemButton21 = Button:new(wx*0.02, wy*0.20, wy*0.08, wx*0.08, 4, 1)
+	shopItemButton22 = Button:new(wx*0.12, wy*0.20, wy*0.08, wx*0.08, 4, 2)
+	shopItemButton23 = Button:new(wx*0.22, wy*0.20, wy*0.08, wx*0.08, 4, 3)
+	shopItemButton24 = Button:new(wx*0.32, wy*0.20, wy*0.08, wx*0.08, 4, 4)
+
+	shopItem21 = ShopItem:new(2)
+	shopItem22 = ShopItem:new(2)
+	shopItem23 = ShopItem:new(2)
+	shopItem24 = ShopItem:new(2)
 
 end
 
@@ -508,11 +532,11 @@ function love.draw()
 	shopMenuButton1:draw("line")
 	shopMenuButton2:draw("line")
 	shopMenuButton3:draw("line")
-	shopMenuButton4:draw("line")
+	--shopMenuButton4:draw("line")
 	shopMenuButton1:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 	shopMenuButton2:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 	shopMenuButton3:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
-	shopMenuButton4:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+	--shopMenuButton4:isClick(shopMenu, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
 	
 	-- Player and Monster 
 	p:draw()
@@ -520,7 +544,7 @@ function love.draw()
 
 	-- Shop menu
 
-	if shopMenu:getNumber() == 1 then 
+	if shopMenu:getNumber() == 1 then  -- Character weapons/gear/skill
 		love.graphics.print("IN MENU ONE")
 		shopItemButton11:draw("line")
 		shopItemButton12:draw("line")
@@ -533,12 +557,23 @@ function love.draw()
 
 
 
-	elseif shopMenu:getNumber() == 2 then 
+	elseif shopMenu:getNumber() == 2 then -- Character housing 
 		love.graphics.print("IN MENU TWO")
-	elseif shopMenu:getNumber() == 3 then 
+		shopItemButton21:draw("line")
+		shopItemButton22:draw("line")
+		shopItemButton23:draw("line")
+		shopItemButton24:draw("line")
+		shopItemButton21:isClick(shopItem21, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton22:isClick(shopItem22, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton23:isClick(shopItem23, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+		shopItemButton24:isClick(shopItem24, love.mouse.getX(), love.mouse.getY(), love.mouse.isDown(1))
+
+
+	elseif shopMenu:getNumber() == 3 then  -- Credits 
 		love.graphics.print("IN MENU THREE")
-	elseif shopMenu:getNumber() == 4 then 
-		love.graphics.print("IN MENU FOUR")
+	--elseif shopMenu:getNumber() == 4 then 
+		--love.graphics.print("IN MENU FOUR")
+		love.graphics.print("CREDITS ASDFJLSADJFKALSDJF LKSJFD LASKDF\n sldfjaslkdjflaskjdflasdjfklasjdflk \n asdkfljslakdfjlskdf", 10, 200)
 	end 
 
 end
