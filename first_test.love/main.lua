@@ -11,7 +11,13 @@ Player = {
 	name = "",
 	maxHealth = 100,
 	clickDmg = 1, 
-	expGate = 5
+	expGate = 5,
+	skill1 = false, 
+	skill2 = false,
+	skill3 = false, 
+	skill4 = false,
+	mp = 50,
+	maxMp = 50
 } 
 
 Player.__index = Player
@@ -31,6 +37,16 @@ end
 function Player.setHealth(self, health)
 	-- body
 	self.health = health
+end
+
+function Player.setMp( self, mp )
+	-- body
+	self.mp = mp
+end
+
+function Player.setMaxMp( self, maxMp )
+	-- body
+	self.maxMp = maxMp
 end
 
 function Player.setGold(self, gold)
@@ -63,12 +79,31 @@ function Player.setClickDmg( self, dmg )
 	self.clickDmg = dmg 
 end
 
+function Player.setExpGate( self, expGate )
+	-- body
+	self.expGate = expGate
+end
+
+function Player.setMaxHealth( self, maxHealth )
+	-- body
+	self.maxHealth = maxHealth
+end
 
 -- Player get_helpers
 
 function Player.getHealth(self)
 	-- body
 	return self.health
+end
+
+function Player.getMp( self )
+	-- body
+	return self.mp
+end
+
+function Player.getMaxMp( self )
+	-- body
+	return self.maxMp
 end
 
 function Player.getGold(self)
@@ -129,12 +164,23 @@ function Player.levelUp( self )
 	self.dmg = self.dmg + 1 
 	self.exp = 0 
 	self.expGate = self.expGate + 1 
+	self.maxMp = 50 + 10 * (self.level)
+	self.mp = self.maxMp
 end
 
 function Player.draw( self )
 	-- body
 	love.graphics.rectangle("line",wx*0.58, wy*0.6, wx*0.1, wy*0.2)
 end
+
+
+-- Player Skill Class 
+Skill = {
+	
+}
+
+Skill.__index = Skill 
+
 
 -- Monster Class 
 Monster = {
@@ -407,16 +453,34 @@ function Button.isClick(self, obj, mx, my, isDown)
 				love.graphics.print(self.number)
 			end 
 
-			if self.id == 2 then 
+			if self.id == 2 then  -- Player Stats and skills 
+				-- DMG
 				love.graphics.print("SHOP ITEMMM IN MENU 1", 200, 0)
-				if self.number == 1 then 
-					love.graphics.print("SHOP ITEMMM 111111", 400, 0)
-				elseif self.number == 2 then 
+				if self.number == 1 and p:getGold() >= 0 then 
+					love.graphics.print("Damage up +1", 400, 0)
+					p:setDmg(p:getDmg() + 1)
+					p:setGold(p:getGold() - 0 )
+
+				-- Health 
+				elseif self.number == 2 and p:getGold() >= 0 then 
 					love.graphics.print("SHOP ITEMMM 2222222", 400, 0)
-				elseif self.number == 3 then
+					p:setMaxHealth(p:getMaxHealth() + 10)
+					p:setGold(p:getGold() - 0)
+
+				-- Health Potion 
+				elseif self.number == 3 and p:getGold() >= 0 then
 					love.graphics.print("SHOP ITEMMM 3333333", 400, 0)
-				elseif self.number == 4 then 
-					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)		
+					if p:getHealth() < p:getMaxHealth() then 
+						p:setHealth(p:getHealth() + p:getMaxHealth()*0.5)
+						p:setGold(p:getGold() - 0)
+					end 
+
+				-- Magic Potion
+				elseif self.number == 4 and p:getGold() >= 0 then 
+					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)	
+					p:setMp(p:getMaxMp())
+					p:setGold(p:getGold() - 0)
+
 				elseif self.number == 5 then 
 					love.graphics.print("SHOP ITEMMM 5555555", 400, 0)
 				elseif self.number == 6 then 
@@ -428,7 +492,7 @@ function Button.isClick(self, obj, mx, my, isDown)
 				end 
 			end
 
-			if self.id == 4 then 
+			if self.id == 4 then -- Player land for gold income and game progression 
 				love.graphics.print("SHOP ITEMMM IN MENU 2", 200, 0)
 				if self.number == 1 then 
 					love.graphics.print("SHOP ITEMMM 111111", 400, 0)
@@ -517,6 +581,7 @@ function love.update(dt)
 
 	if p:getExp() >= p:getExpGate() then 
 		p:levelUp()
+		p:setExpGate(p:getExpGate() * 2)
 	end 
 end
 
@@ -526,6 +591,7 @@ function love.draw()
 	love.graphics.print(love.mouse.getY(), 50, 50)
 
 	-- Player info 
+	love.graphics.print(p:getMp(), wx*0.58, wy*0.34)
 	love.graphics.print(p:getName(), wx*0.58, wy*0.36)
 	love.graphics.print(p:getLevel(), wx*0.58, wy*0.38)
 	love.graphics.print(p:getExp(), wx*0.58, wy*0.40)
