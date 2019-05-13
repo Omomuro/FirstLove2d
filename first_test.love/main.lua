@@ -1,3 +1,15 @@
+-- global vars 
+town1 = false 
+town2 = false 
+town3 = false 
+town4 = false 
+
+town1_boss_defeated = false 
+town2_boss_defeated = false 
+town3_boss_defeated = false 
+town4_boss_defeated = false 
+
+
 -- Class code 
 
 Player = {
@@ -463,13 +475,13 @@ function Button.isClick(self, obj, mx, my, isDown)
 
 				-- Health 
 				elseif self.number == 2 and p:getGold() >= 0 then 
-					love.graphics.print("SHOP ITEMMM 2222222", 400, 0)
+					love.graphics.print("SHOP ITEMMM maxHealth + 10", 400, 0)
 					p:setMaxHealth(p:getMaxHealth() + 10)
 					p:setGold(p:getGold() - 0)
 
 				-- Health Potion 
 				elseif self.number == 3 and p:getGold() >= 0 then
-					love.graphics.print("SHOP ITEMMM 3333333", 400, 0)
+					love.graphics.print("SHOP ITEMMM Health Recover", 400, 0)
 					if p:getHealth() < p:getMaxHealth() then 
 						p:setHealth(p:getHealth() + p:getMaxHealth()*0.5)
 						p:setGold(p:getGold() - 0)
@@ -477,7 +489,7 @@ function Button.isClick(self, obj, mx, my, isDown)
 
 				-- Magic Potion
 				elseif self.number == 4 and p:getGold() >= 0 then 
-					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)	
+					love.graphics.print("SHOP ITEMMM Mana Recover", 400, 0)	
 					p:setMp(p:getMaxMp())
 					p:setGold(p:getGold() - 0)
 
@@ -496,12 +508,16 @@ function Button.isClick(self, obj, mx, my, isDown)
 				love.graphics.print("SHOP ITEMMM IN MENU 2", 200, 0)
 				if self.number == 1 then 
 					love.graphics.print("SHOP ITEMMM 111111", 400, 0)
+					town1 = true 
 				elseif self.number == 2 then 
 					love.graphics.print("SHOP ITEMMM 2222222", 400, 0)
+					town2 = true 
 				elseif self.number == 3 then
 					love.graphics.print("SHOP ITEMMM 3333333", 400, 0)
+					town3 = true 
 				elseif self.number == 4 then 
 					love.graphics.print("SHOP ITEMMM 4444444", 400, 0)
+					town4 = true 
 				end 
 			end 
 
@@ -667,6 +683,26 @@ function love.draw()
 	--elseif shopMenu:getNumber() == 4 then 
 		--love.graphics.print("IN MENU FOUR")
 		love.graphics.print("CREDITS ASDFJLSADJFKALSDJF LKSJFD LASKDF\n sldfjaslkdjflaskjdflasdjfklasjdflk \n asdkfljslakdfjlskdf", 10, 200)
+	end 
+
+	-- Town 
+	if town1 then
+		love.graphics.rectangle("line", wx*0.50, wy*0.50, wx*0.08, wy*0.08)
+		if town1_boss_defeated == false then 
+			--boss code 
+		end 
+	end 
+
+	if town2 then 
+		love.graphics.rectangle("line", wx*0.60, wy*0.50, wx*0.08, wy*0.08)
+	end 
+
+	if town3 then 
+		love.graphics.rectangle("line", wx*0.70, wy*0.50, wx*0.08, wy*0.08)
+	end 
+
+	if town4 then 
+		love.graphics.rectangle("line", wx*0.80, wy*0.50, wx*0.08, wy*0.08)
 	end 
 
 end
